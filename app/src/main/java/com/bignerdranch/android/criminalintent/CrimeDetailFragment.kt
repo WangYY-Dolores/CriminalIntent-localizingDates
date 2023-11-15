@@ -32,7 +32,7 @@ private const val DATE_FORMAT = "EEE, MMM, dd"
 class CrimeDetailFragment : Fragment() {
 
     private var _binding: FragmentCrimeDetailBinding? = null
-    private val binding
+    val binding
         get() = checkNotNull(_binding) {
             "Cannot access binding because it is null. Is the view visible?"
         }
@@ -141,7 +141,7 @@ class CrimeDetailFragment : Fragment() {
         _binding = null
     }
 
-    private fun updateUi(crime: Crime) {
+    fun updateUi(crime: Crime) {
         binding.apply {
             if (crimeTitle.text.toString() != crime.title) {
                 crimeTitle.setText(crime.title)
@@ -251,5 +251,9 @@ class CrimeDetailFragment : Fragment() {
                 binding.crimePhoto.tag = null
             }
         }
+    }
+
+    fun formatDate(date: Date): String {
+        return DateFormat.format("EEE, MMM, dd", date).toString()
     }
 }
