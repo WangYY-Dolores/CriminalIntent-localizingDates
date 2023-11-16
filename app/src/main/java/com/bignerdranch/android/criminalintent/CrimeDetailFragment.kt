@@ -26,6 +26,7 @@ import com.bignerdranch.android.criminalintent.databinding.FragmentCrimeDetailBi
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.Date
+import java.util.Locale
 
 
 class CrimeDetailFragment : Fragment() {
@@ -152,7 +153,9 @@ class CrimeDetailFragment : Fragment() {
                 )
             }
 
-            val date = DateFormat.getDateFormat(requireContext()).format(crime.date)
+            val currentLocale = Locale.getDefault()
+            val localizedFormat = DateFormat.getBestDateTimePattern(currentLocale, "yyyy-MM-dd")
+            val date = DateFormat.format(localizedFormat, crime.date)
             crimeDate.text = date
             crimeDate.setOnClickListener {
                 findNavController().navigate(
@@ -193,10 +196,9 @@ class CrimeDetailFragment : Fragment() {
             getString(R.string.crime_report_unsolved)
         }
 
-//        val dateString = DateFormat.format(DATE_FORMAT, crime.date).toString()
-
-        val dateFormat = DateFormat.getDateFormat(context)
-        val dateString = dateFormat.format(crime.date)
+        val currentLocale = Locale.getDefault()
+        val localizedFormat = DateFormat.getBestDateTimePattern(currentLocale, "yyyy-MM-dd")
+        val dateString = DateFormat.format(localizedFormat, crime.date)
 
         val suspectText = if (crime.suspect.isBlank()) {
             getString(R.string.crime_report_no_suspect)
